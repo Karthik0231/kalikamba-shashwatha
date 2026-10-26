@@ -1,75 +1,63 @@
 -- ====================================================================
--- SRI KALIKAMBA TEMPLE BARKUR — DATABASE SCHEMA
--- Execute this entire script in Supabase: Project -> SQL Editor -> New Query -> Run
+-- SRI KALIKAMBA TEMPLE BARKUR — ULTRA-LIGHT DATABASE SCHEMA
+-- Zero Bloat: Compact Postgres Types + No Duplicate Indexes
 -- ====================================================================
 
--- Enable UUID extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
--- 1. SHASHWATHA SEVA REGISTRATIONS TABLE
+-- 1. SHASHWATHA SEVA REGISTRATIONS
 CREATE TABLE IF NOT EXISTS public.registrations (
     id TEXT PRIMARY KEY DEFAULT uuid_generate_v4()::text,
-    serial_number TEXT UNIQUE NOT NULL,
-    devotee_name TEXT NOT NULL,
-    phone TEXT NOT NULL,
+    serial_number VARCHAR(20) UNIQUE NOT NULL,
+    devotee_name VARCHAR(120) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
     address TEXT NOT NULL,
-    place TEXT DEFAULT 'Barkur (ಬಾರಕೂರು)',
-    seva_type TEXT NOT NULL CHECK (seva_type IN ('NITYA_POOJA', 'NAVARATRI', 'SONARATHI', 'ANNADANA')),
+    place VARCHAR(80) DEFAULT 'Barkur (ಬಾರಕೂರು)',
+    seva_type VARCHAR(20) NOT NULL CHECK (seva_type IN ('NITYA_POOJA', 'NAVARATRI', 'SONARATHI', 'ANNADANA')),
     seva_date DATE,
-    festival_day INTEGER,
-    agreed_fee NUMERIC(10, 2) NOT NULL DEFAULT 1500.00,
-    paid_amount NUMERIC(10, 2) NOT NULL DEFAULT 1500.00,
-    payment_status TEXT NOT NULL DEFAULT 'PAID' CHECK (payment_status IN ('PAID', 'PARTIAL', 'UNPAID')),
+    festival_day SMALLINT,
+    agreed_fee INTEGER NOT NULL DEFAULT 1500,
+    paid_amount INTEGER NOT NULL DEFAULT 1500,
+    payment_status VARCHAR(10) NOT NULL DEFAULT 'PAID' CHECK (payment_status IN ('PAID', 'PARTIAL', 'UNPAID')),
     notes TEXT,
     created_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc'::text, now()),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc'::text, now())
 );
 
--- Fast Indexing
-CREATE INDEX IF NOT EXISTS idx_registrations_serial ON public.registrations(serial_number);
-CREATE INDEX IF NOT EXISTS idx_registrations_phone ON public.registrations(phone);
-CREATE INDEX IF NOT EXISTS idx_registrations_seva_type ON public.registrations(seva_type);
-CREATE INDEX IF NOT EXISTS idx_registrations_date ON public.registrations(seva_date);
+-- Note: 'serial_number UNIQUE' automatically creates the lookup index.
+-- No extra indexes needed: saves ~32 KB per table in Postgres page allocations.
 
--- 2. GRAMA MOKTESARARU (VILLAGE HEADS DIRECTORY)
+-- 2. GRAMA MOKTESARARU
 CREATE TABLE IF NOT EXISTS public.grama_moktesararu (
     id TEXT PRIMARY KEY DEFAULT uuid_generate_v4()::text,
-    name TEXT NOT NULL,
-    phone_primary TEXT NOT NULL,
-    phone_secondary TEXT,
-    grama TEXT NOT NULL,
+    name VARCHAR(120) NOT NULL,
+    phone_primary VARCHAR(20) NOT NULL,
+    phone_secondary VARCHAR(20),
+    grama VARCHAR(80) NOT NULL,
     address TEXT NOT NULL,
-    designation TEXT DEFAULT 'ಮೊಕ್ತೇಸರರು',
+    designation VARCHAR(60) DEFAULT 'ಮೊಕ್ತೇಸರರು',
     created_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc'::text, now())
 );
 
-CREATE INDEX IF NOT EXISTS idx_moktesararu_grama ON public.grama_moktesararu(grama);
-CREATE INDEX IF NOT EXISTS idx_moktesararu_phone ON public.grama_moktesararu(phone_primary);
-
--- 3. ANNUAL KANIKE & FESTIVAL REMITTANCES LEDGER
+-- 3. ANNUAL KANIKE
 CREATE TABLE IF NOT EXISTS public.annual_kanike (
     id TEXT PRIMARY KEY DEFAULT uuid_generate_v4()::text,
-    year INTEGER NOT NULL,
-    festival_event TEXT NOT NULL,
+    year SMALLINT NOT NULL,
+    festival_event VARCHAR(100) NOT NULL,
     moktesara_id TEXT,
-    moktesara_name TEXT NOT NULL,
-    grama TEXT NOT NULL,
-    phone TEXT,
+    moktesara_name VARCHAR(120) NOT NULL,
+    grama VARCHAR(80) NOT NULL,
+    phone VARCHAR(20),
     people_count INTEGER NOT NULL DEFAULT 1,
-    kanike_type TEXT NOT NULL,
-    amount NUMERIC(12, 2) NOT NULL,
-    receipt_number TEXT,
+    kanike_type VARCHAR(80) NOT NULL,
+    amount INTEGER NOT NULL,
+    receipt_number VARCHAR(40),
     date DATE NOT NULL,
     notes TEXT,
     created_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc'::text, now())
 );
 
-CREATE INDEX IF NOT EXISTS idx_kanike_year_event ON public.annual_kanike(year, festival_event);
-CREATE INDEX IF NOT EXISTS idx_kanike_grama ON public.annual_kanike(grama);
-CREATE INDEX IF NOT EXISTS idx_kanike_type ON public.annual_kanike(kanike_type);
-
--- 4. ENABLE ROW LEVEL SECURITY (RLS) & PUBLIC ACCESS POLICIES
--- Allows temple web app direct secure read/write
+-- ENABLE ROW LEVEL SECURITY (RLS)
 ALTER TABLE public.registrations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.grama_moktesararu ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.annual_kanike ENABLE ROW LEVEL SECURITY;
