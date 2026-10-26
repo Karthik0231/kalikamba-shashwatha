@@ -294,10 +294,13 @@ export const GramaMoktesararuView: React.FC = () => {
     <div className="space-y-4">
       {/* PRINT VIEW */}
       <div className="hidden print:block print-sheet text-black font-sans p-4 bg-white w-full">
-        <div className="text-center border-b-2 border-black pb-3 mb-4">
-          <h1 className="text-xl font-bold">ಶ್ರೀ ಕಾಳಿಕಾಂಬಾ ದೇವಸ್ಥಾನ ಬಾರಕೂರು</h1>
-          <h2 className="text-sm font-semibold">ಗ್ರಾಮ ಮೊಕ್ತೇಸರರ ಅಧಿಕೃತ ಸಂಪರ್ಕ ಪಟ್ಟಿ / Grama Moktesararu Official Directory</h2>
-          <p className="text-xs text-gray-700">Total: {filteredMoktesararu.length} Village Representatives | Printed: {new Date().toLocaleDateString('en-IN')}</p>
+        <div className="flex items-center gap-3 border-b-2 border-black pb-3 mb-4">
+          <img src="/logo.jpg" alt="Temple Logo" className="w-14 h-14 object-contain rounded shrink-0 border border-black/20" />
+          <div className="flex-1 text-center pr-3">
+            <h1 className="text-xl font-bold leading-tight">ಶ್ರೀ ಕಾಳಿಕಾಂಬಾ ದೇವಸ್ಥಾನ ಬಾರಕೂರು</h1>
+            <h2 className="text-xs font-semibold">ಗ್ರಾಮ ಮೊಕ್ತೇಸರರ ಅಧಿಕೃತ ಸಂಪರ್ಕ ಪಟ್ಟಿ / Grama Moktesararu Official Directory</h2>
+            <p className="text-[11px] text-gray-700">Total: {filteredMoktesararu.length} Village Representatives | Printed: {new Date().toLocaleDateString('en-IN')}</p>
+          </div>
         </div>
         <div className={`grid gap-2.5 w-full ${gridCols === 2 ? 'grid-cols-2' : gridCols === 3 ? 'grid-cols-3' : 'grid-cols-4'}`}>
           {filteredMoktesararu.map(m => (

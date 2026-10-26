@@ -101,12 +101,11 @@ export const TempleWorkspace: React.FC = () => {
           <div className="flex items-center justify-between h-14 gap-4">
             {/* Brand */}
             <div className="flex items-center gap-3 min-w-0 shrink-0">
-              <div
-                className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-xs"
-                style={{ background: currentColor.hex }}
-              >
-                ಕಾ
-              </div>
+              <img
+                src="/logo.jpg"
+                alt="Sri Kalikamba Temple Barkur"
+                className="w-9 h-9 rounded-lg object-cover shrink-0 shadow-xs border border-slate-200 dark:border-slate-700"
+              />
               <div className="min-w-0">
                 <div className="text-sm font-semibold text-slate-900 dark:text-white leading-tight truncate">
                   {language === 'kn' ? 'ಶ್ರೀ ಕಾಳಿಕಾಂಬಾ ದೇವಸ್ಥಾನ' : 'Sri Kalikamba Temple'}

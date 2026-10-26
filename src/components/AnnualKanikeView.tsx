@@ -848,13 +848,16 @@ export const AnnualKanikeView: React.FC = () => {
             <div className="p-4 sm:p-6 bg-slate-100 dark:bg-slate-950 overflow-y-auto max-h-[60vh]">
               <div className="bg-white text-black p-6 sm:p-8 rounded shadow-md font-serif border border-gray-300 max-w-lg mx-auto print:border-none print:shadow-none print:p-0">
                 {/* Header */}
-                <div className="text-center border-b-2 border-black pb-3 mb-3">
-                  <div className="text-lg font-bold">ಶ್ರೀ ಕಾಳಿಕಾಂಬಾ ದೇವಸ್ಥಾನ ಬಾರಕೂರು</div>
-                  <div className="text-xs uppercase tracking-wider text-gray-700">
-                    Sri Kalikamba Temple, Barkur, Udupi Dist - 576210
-                  </div>
-                  <div className="text-xs font-bold mt-1 text-gray-800">
-                    ಗ್ರಾಮ ಮೊಕ್ತೇಸರರ ಕಾಣಿಕೆ ಸಲ್ಲಿಕೆ ಅಧಿಕೃತ ರಸೀದಿ (Official Receipt)
+                <div className="flex items-center gap-3 border-b-2 border-black pb-3 mb-3">
+                  <img src="/logo.jpg" alt="Temple Logo" className="w-14 h-14 object-contain rounded shrink-0 border border-black/20" />
+                  <div className="flex-1 text-center pr-3">
+                    <div className="text-base font-bold leading-tight">ಶ್ರೀ ಕಾಳಿಕಾಂಬಾ ದೇವಸ್ಥಾನ ಬಾರಕೂರು</div>
+                    <div className="text-[10px] uppercase tracking-wider text-gray-700">
+                      Sri Kalikamba Temple, Barkur, Udupi Dist - 576210
+                    </div>
+                    <div className="text-[11px] font-bold mt-0.5 text-gray-800">
+                      ಗ್ರಾಮ ಮೊಕ್ತೇಸರರ ಕಾಣಿಕೆ ಸಲ್ಲಿಕೆ ಅಧಿಕೃತ ರಸೀದಿ (Official Receipt)
+                    </div>
                   </div>
                 </div>
 

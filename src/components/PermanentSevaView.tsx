@@ -549,11 +549,14 @@ export const PermanentSevaView: React.FC = () => {
       {/* PRINT: DEVOTEE RECEIPT */}
       {printMode === 'receipt' && printingRecord && (
         <div className="hidden print:block print-sheet text-black font-sans p-6 bg-white max-w-xl mx-auto border-2 border-black">
-          <div className="text-center border-b-2 border-black pb-3 mb-4">
-            <h1 className="text-2xl font-bold">ಶ್ರೀ ಕಾಳಿಕಾಂಬಾ ದೇವಸ್ಥಾನ ಬಾರಕೂರು</h1>
-            <h2 className="text-base font-semibold">Sri Kalikamba Temple Barkur, Udupi</h2>
-            <p className="text-xs">Car Street, Barkur, Udupi District, Karnataka - 576210</p>
-            <div className="mt-2 text-xs font-bold border border-black inline-block px-3 py-1 uppercase tracking-wider">ಶಾಶ್ವತ ಸೇವಾ ಅಧಿಕೃತ ರಸೀದಿ / Official Seva Receipt</div>
+          <div className="flex items-center gap-3 border-b-2 border-black pb-3 mb-4">
+            <img src="/logo.jpg" alt="Temple Logo" className="w-16 h-16 object-contain rounded shrink-0 border border-black/20" />
+            <div className="flex-1 text-center pr-4">
+              <h1 className="text-xl font-bold leading-tight">ಶ್ರೀ ಕಾಳಿಕಾಂಬಾ ದೇವಸ್ಥಾನ ಬಾರಕೂರು</h1>
+              <h2 className="text-xs font-semibold">Sri Kalikamba Temple Barkur, Udupi</h2>
+              <p className="text-[11px] text-gray-700"> Barkur, Udupi District, Karnataka - 576210</p>
+              <div className="mt-1 text-[11px] font-bold border border-black inline-block px-2.5 py-0.5 uppercase tracking-wider">ಶಾಶ್ವತ ಸೇವಾ ಅಧಿಕೃತ ರಸೀದಿ / Official Seva Receipt</div>
+            </div>
           </div>
           <div className="grid grid-cols-2 text-xs gap-3 mb-4">
             <div>
